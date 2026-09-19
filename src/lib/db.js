@@ -1,0 +1,4 @@
+const url=import.meta.env.VITE_SUPABASE_URL;const key=import.meta.env.VITE_SUPABASE_ANON_KEY;
+export const configured=Boolean(url&&key);
+async function request(path,options={}){if(!configured)throw new Error('SPOTS database is not configured');const r=await fetch(url+'/rest/v1/'+path,{...options,headers:{apikey:key,Authorization:'Bearer '+key,'Content-Type':'application/json',...(options.headers||{})}});if(!r.ok)throw new Error('Database request failed');return r.status===204?null:r.json()}
+export const db={properties:()=>request('properties?select=*&order=base_value.asc'),listings:()=>request('listings?select=*&status=eq.open&order=created_at.desc'),profile:id=>request('profiles?id=eq.'+encodeURIComponent(id)+'&select=*'),ownership:id=>request('ownership?property_id=eq.'+id+'&select=*'),credentials:id=>request('credentials?owner_id=eq.'+encodeURIComponent(id)+'&public=eq.true&verification_status=eq.verified&select=*')};

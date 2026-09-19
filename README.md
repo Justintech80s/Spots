@@ -18,3 +18,7 @@ Purchasing and bidding remain disabled until secure authentication, persistent o
 
 ## Netlify
 Build command: `npm run build`; publish directory: `dist`.
+
+
+## Backend foundation
+PostgreSQL/Supabase schema, RLS policies, ownership shares, verified credential records, listings, bids and transfer audit records are now included under `supabase/` and `src/lib/`. See `docs/BACKEND.md`.
